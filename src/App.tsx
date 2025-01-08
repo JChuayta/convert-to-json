@@ -32,12 +32,12 @@ function App() {
       NotificationSignedDocument: inputJson.Input.NotificationSignedDocument,
       DocumentDirectoryId: inputJson.Input.DocumentDirectoryId,
       DocumentOwnerComplete: inputJson.Input.DocumentOwnerComplete,
-      Documents: inputJson.Input.Documents.$values.map((document) => ({
+      Documents: inputJson.Input.Documents.$values.map((document: any) => ({
         DocumentId: document.DocumentId,
         DocumentType: document.DocumentType,
         SingSetting: {
           Signatories: document.SingSetting.Signatories.$values.map(
-            (signatory) => ({
+            (signatory: any) => ({
               UserNameSignatory: signatory.UserNameSignatory,
               SigningRepresentative: signatory.SigningRepresentative,
               SignatureFlow: signatory.SignatureFlow,
