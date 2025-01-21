@@ -5,6 +5,7 @@ function App() {
   const [textInput, setTextInput] = useState<string>(""); // Entrada del texto
   const [jsonOutput, setJsonOutput] = useState<string>(""); // Salida en JSON
   const [copySuccess, setCopySuccess] = useState<string>(""); // Mensaje de copia
+
   const handleConvertToJson = () => {
     try {
       const cleanedJson = cleanJson(textInput);
@@ -16,6 +17,12 @@ function App() {
     } catch (error) {
       setJsonOutput("Error converting to JSON");
     }
+  };
+
+  const handleClear = (): void => {
+    setTextInput("");
+    setJsonOutput("");
+    setCopySuccess("");
   };
 
   // Función para copiar el resultado al portapapeles
@@ -63,8 +70,14 @@ function App() {
   }
 
   return (
-    <div style={{ maxWidth: "50rem", margin: "0 auto", padding: "20px" }}>
+    <div style={{ maxWidth: "50rem", margin: "0 auto", padding: "20px", width: "35%" }}>
       <h2>Text to JSON Converter</h2>
+      <button
+        onClick={handleClear}
+        style={{ padding: "10px 10px", marginBottom: "20px" }}
+      >
+        Clear All
+      </button>
       <div style={{ marginBottom: "20px" }}>
         <label
           htmlFor="textInput"
@@ -113,6 +126,8 @@ function App() {
       {copySuccess && (
         <p style={{ color: "green", marginTop: "10px" }}>{copySuccess}</p>
       )}
+
+     
     </div>
   );
 }

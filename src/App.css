@@ -1,9 +1,10 @@
 #root {
-  max-width: 1280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   padding: 2rem;
   text-align: center;
-  margin-inline: 11rem;
 }
 
 .logo {
