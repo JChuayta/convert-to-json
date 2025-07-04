@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "./App.css";
+import Stats from "./components/Stats";
+import VisitorCounter from "./components/VisitorCounter";
 
 function App() {
   const [textInput, setTextInput] = useState<string>(""); // Entrada del texto
@@ -12,6 +14,11 @@ function App() {
 
       setJsonOutput(JSON.stringify(cleanedJson, null, 2));
       setCopySuccess("");
+
+      // Incrementar estadísticas de conversión
+      if (typeof window !== 'undefined' && (window as any).incrementConversions) {
+        (window as any).incrementConversions();
+      }
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
@@ -28,7 +35,7 @@ function App() {
   // Función para copiar el resultado al portapapeles
   const handleCopyToClipboard = () => {
     navigator.clipboard.writeText(jsonOutput);
-    setCopySuccess("Copied to clipboard!");
+    setCopySuccess("¡Copiado al portapapeles!");
   };
 
   function cleanJson(json: string): any {
@@ -70,64 +77,63 @@ function App() {
   }
 
   return (
-    <div style={{ maxWidth: "50rem", margin: "0 auto", padding: "20px", width: "35%" }}>
-      <h2>Text to JSON Converter</h2>
-      <button
-        onClick={handleClear}
-        style={{ padding: "10px 10px", marginBottom: "20px" }}
-      >
-        Clear All
+    <div className="app-container">
+      <div className="app-header">
+        <h1 className="app-title">🔄 Convert to JSON</h1>
+        <p className="app-subtitle">
+          Convierte y limpia tus datos JSON de forma rápida y sencilla
+        </p>
+        <div className="stats-badge">
+          <img src="https://visitor-badge.laobi.icu/badge?page_id=convert-to-json" alt="visitors"/>
+        </div>
+        <Stats />
+      </div>
+
+      <button onClick={handleClear} className="button button-secondary">
+        🗑️ Limpiar Todo
       </button>
-      <div style={{ marginBottom: "20px" }}>
-        <label
-          htmlFor="textInput"
-          style={{ display: "block", marginBottom: "8px" }}
-        >
-          Enter your text:
+
+      <div className="form-group">
+        <label htmlFor="textInput" className="form-label">
+          📝 Ingresa tu texto JSON:
         </label>
         <textarea
           id="textInput"
           value={textInput}
           onChange={(e) => setTextInput(e.target.value)}
           rows={8}
-          style={{ width: "100%", padding: "10px", fontSize: "16px" }}
+          className="textarea"
+          placeholder="Pega aquí tu JSON..."
         />
       </div>
-      <button
-        onClick={handleConvertToJson}
-        style={{ marginBottom: "20px", padding: "10px 20px" }}
-      >
-        Convert to JSON
+
+      <button onClick={handleConvertToJson} className="button">
+        🔄 Convertir a JSON
       </button>
-      <div style={{ marginBottom: "20px" }}>
-        <label
-          htmlFor="jsonOutput"
-          style={{ display: "block", marginBottom: "8px" }}
-        >
-          JSON Output:
+
+      <div className="form-group">
+        <label htmlFor="jsonOutput" className="form-label">
+          📤 Resultado JSON:
         </label>
         <textarea
           id="jsonOutput"
           value={jsonOutput}
           readOnly
           rows={12}
-          style={{
-            width: "100%",
-            padding: "10px",
-            fontSize: "16px",
-            color: "#333",
-            backgroundColor: "#f9f9f9",
-          }}
+          className="textarea textarea-output"
+          placeholder="El JSON convertido aparecerá aquí..."
         />
       </div>
-      <button onClick={handleCopyToClipboard} style={{ padding: "10px 20px" }}>
-        Copy to Clipboard
+
+      <button onClick={handleCopyToClipboard} className="button">
+        📋 Copiar al Portapapeles
       </button>
+
       {copySuccess && (
-        <p style={{ color: "green", marginTop: "10px" }}>{copySuccess}</p>
+        <p className="success-message">{copySuccess}</p>
       )}
 
-     
+      <VisitorCounter />
     </div>
   );
 }

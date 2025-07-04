@@ -3,8 +3,215 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
   padding: 2rem;
   text-align: center;
+  color: #ffffff;
+}
+
+.app-container {
+  background: linear-gradient(145deg, #1e1e2e 0%, #2d2d44 100%);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid #3a3a5a;
+}
+
+.app-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #3a3a5a;
+}
+
+.app-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
+.app-subtitle {
+  color: #b8b8d1;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.stats-badge {
+  display: inline-block;
+  background: linear-gradient(145deg, #2a2a3e 0%, #1e1e2e 100%);
+  border: 1px solid #3a3a5a;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  color: #b8b8d1;
+  margin: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.button {
+  background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin: 0.5rem;
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(168, 85, 247, 0.5);
+  background: linear-gradient(135deg, #c084fc 0%, #60a5fa 100%);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.button-secondary {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: #ffffff;
+}
+
+.button-secondary:hover {
+  box-shadow: 0 10px 25px rgba(239, 68, 68, 0.5);
+  background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+}
+
+.textarea {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #3a3a5a;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  resize: vertical;
+  transition: all 0.3s ease;
+  background: #1a1a2e;
+  color: #ffffff;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: #a855f7;
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+  background: #1e1e2e;
+}
+
+.textarea::placeholder {
+  color: #6b6b8a;
+}
+
+.textarea-output {
+  background: #1a1a2e;
+  color: #a855f7;
+  border-color: #4a4a6a;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #b8b8d1;
+}
+
+.success-message {
+  color: #10b981;
+  font-weight: 600;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 5px;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.visitor-counter {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #b8b8d1;
+  border-top: 1px solid #3a3a5a;
+  margin-top: 2rem;
+  background: linear-gradient(145deg, #1a1a2e 0%, #2a2a3e 100%);
+  border-radius: 0 0 20px 20px;
+}
+
+/* Scrollbar personalizada para el tema dark */
+.textarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+.textarea::-webkit-scrollbar-track {
+  background: #1a1a2e;
+  border-radius: 4px;
+}
+
+.textarea::-webkit-scrollbar-thumb {
+  background: #3a3a5a;
+  border-radius: 4px;
+}
+
+.textarea::-webkit-scrollbar-thumb:hover {
+  background: #4a4a6a;
+}
+
+/* Animaciones */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(168, 85, 247, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .app-title {
+    font-size: 2rem;
+  }
+  
+  .button {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+}
+
+/* Efectos de partículas de fondo */
+#root::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(239, 68, 68, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .logo {

@@ -1,0 +1,16 @@
+{
+  "name": "Convert to JSON - Dark Theme",
+  "short_name": "JSON Converter",
+  "description": "Convierte y limpia tus datos JSON de forma rápida y sencilla con tema dark",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f23",
+  "theme_color": "#a855f7",
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ]
+} 
