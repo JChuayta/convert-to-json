@@ -1,11 +1,7 @@
 import { useEffect } from 'react';
 import { useStats } from '../hooks/useStats';
 
-interface StatsProps {
-  pageId?: string;
-}
-
-const Stats: React.FC<StatsProps> = ({ pageId = 'convert-to-json' }) => {
+const Stats: React.FC = () => {
   const { stats, incrementConversions } = useStats();
 
   // Exponer la función globalmente para que App.tsx pueda usarla
