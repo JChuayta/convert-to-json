@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import Modal from "./components/Modal";
 import Stats from "./components/Stats";
 import VisitorCounter from "./components/VisitorCounter";
 
@@ -7,6 +8,7 @@ function App() {
   const [textInput, setTextInput] = useState<string>(""); // Entrada del texto
   const [jsonOutput, setJsonOutput] = useState<string>(""); // Salida en JSON
   const [copySuccess, setCopySuccess] = useState<string>(""); // Mensaje de copia
+  const [showModal, setShowModal] = useState<boolean>(true); // Estado del modal
 
   const handleConvertToJson = () => {
     try {
@@ -78,6 +80,7 @@ function App() {
 
   return (
     <div className="app-container">
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)} />
       <div className="app-header">
         <h1 className="app-title">🔄 Convert to JSON</h1>
         <p className="app-subtitle">
