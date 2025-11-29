@@ -3,28 +3,39 @@ import "./App.css";
 import Modal from "./components/Modal";
 import Stats from "./components/Stats";
 import VisitorCounter from "./components/VisitorCounter";
+import { useAnalytics } from "./hooks/useAnalytics";
 
 function App() {
-  const [textInput, setTextInput] = useState<string>(""); // Entrada del texto
-  const [jsonOutput, setJsonOutput] = useState<string>(""); // Salida en JSON
-  const [copySuccess, setCopySuccess] = useState<string>(""); // Mensaje de copia
-  const [showModal, setShowModal] = useState<boolean>(true); // Estado del modal
+  const [textInput, setTextInput] = useState<string>("");
+  const [jsonOutput, setJsonOutput] = useState<string>("");
+  const [copySuccess, setCopySuccess] = useState<string>("");
+  const [showModal, setShowModal] = useState<boolean>(true);
+  const analytics = useAnalytics();
 
   const handleConvertToJson = () => {
     try {
+      const hasDynatracePrefix = textInput.trim().startsWith('[!dt');
       const cleanedJson = cleanJson(textInput);
 
       setJsonOutput(JSON.stringify(cleanedJson, null, 2));
       setCopySuccess("");
 
-      // Incrementar estadísticas de conversión
+      analytics.trackConversion({
+        hasDynatracePrefix,
+        documentCount: cleanedJson.Documents?.length || 0,
+        signatoryCount: cleanedJson.Documents?.reduce(
+          (acc: number, doc: any) => acc + (doc.SingSetting?.Signatories?.length || 0),
+          0
+        ) || 0,
+      });
+
       if (typeof window !== 'undefined' && (window as any).incrementConversions) {
         (window as any).incrementConversions();
       }
-
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setJsonOutput("Error converting to JSON");
+      analytics.trackError('conversion_failed', error instanceof Error ? error.message : 'Unknown error');
     }
   };
 
@@ -32,16 +43,26 @@ function App() {
     setTextInput("");
     setJsonOutput("");
     setCopySuccess("");
+    analytics.trackClear();
   };
 
-  // Función para copiar el resultado al portapapeles
   const handleCopyToClipboard = () => {
     navigator.clipboard.writeText(jsonOutput);
     setCopySuccess("¡Copiado al portapapeles!");
+    analytics.trackCopy();
   };
 
   function cleanJson(json: string): any {
-    const inputJson: any = JSON.parse(json);
+    let cleanedText = json.trim();
+
+    if (cleanedText.startsWith('[!dt')) {
+      const jsonStartIndex = cleanedText.indexOf('{');
+      if (jsonStartIndex !== -1) {
+        cleanedText = cleanedText.substring(jsonStartIndex);
+      }
+    }
+    
+    const inputJson: any = JSON.parse(cleanedText);
     const output = {
       Channel: inputJson.Input.Channel,
       FlowType: inputJson.Input.FlowType,
@@ -80,7 +101,10 @@ function App() {
 
   return (
     <div className="app-container">
-      <Modal isOpen={showModal} onClose={() => setShowModal(false)} />
+      <Modal isOpen={showModal} onClose={() => {
+        setShowModal(false);
+        analytics.trackModalClose();
+      }} />
       <div className="app-header">
         <h1 className="app-title">🔄 Convert to JSON</h1>
         <p className="app-subtitle">

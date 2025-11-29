@@ -32,6 +32,7 @@ Una aplicación web moderna con elegante tema dark para convertir texto a format
 - CSS3 con gradientes y animaciones
 - Tema Dark personalizado
 - LocalStorage para persistencia de datos
+- Google Analytics 4 (GA4) para métricas avanzadas
 
 ## 🚀 Instalación y Uso
 
@@ -46,12 +47,21 @@ cd convert-to-json
 npm install
 ```
 
-3. Ejecuta el servidor de desarrollo:
+3. Configura Google Analytics (opcional):
+   - Crea un archivo `.env` en la raíz del proyecto
+   - Agrega tu Measurement ID de Google Analytics:
+   ```env
+   VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+   VITE_GA_ENABLE_DEV=false
+   ```
+   - Obtén tu Measurement ID desde [Google Analytics](https://analytics.google.com/)
+
+4. Ejecuta el servidor de desarrollo:
 ```bash
 npm run dev
 ```
 
-4. Abre [http://localhost:5173](http://localhost:5173) en tu navegador.
+5. Abre [http://localhost:5173](http://localhost:5173) en tu navegador.
 
 ## 📝 Uso
 
@@ -80,6 +90,46 @@ Las estadísticas se mantienen automáticamente usando **localStorage**:
 - ✅ **Múltiples métricas** - Conversiones, totales, sesiones y timestamps
 
 Para más detalles sobre el sistema de estadísticas, consulta [STATS.md](./STATS.md).
+
+## 📈 Google Analytics
+
+La aplicación incluye integración completa con **Google Analytics 4 (GA4)** para rastrear métricas avanzadas:
+
+### **Eventos Rastreados:**
+- ✅ **Conversiones de JSON** - Con metadata (prefijo Dynatrace, conteo de documentos, firmantes)
+- ✅ **Copias al portapapeles** - Cada vez que se copia el resultado
+- ✅ **Limpieza de campos** - Cuando se limpia el formulario
+- ✅ **Errores de conversión** - Con detalles del tipo de error
+- ✅ **Cierre de modal** - Interacciones con el modal inicial
+
+### **Configuración Local:**
+1. El Measurement ID `G-QLMQ1ZJCFY` ya está configurado en `index.html`
+2. Para desarrollo local, crea un archivo `.env` en la raíz del proyecto:
+   ```env
+   VITE_GA_MEASUREMENT_ID=G-QLMQ1ZJCFY
+   VITE_GA_ENABLE_DEV=false  # Cambia a 'true' para habilitar en desarrollo
+   ```
+
+### **Configuración para GitHub Pages:**
+Para que Google Analytics funcione en producción (GitHub Pages), necesitas configurar los **GitHub Secrets**:
+
+1. Ve a tu repositorio en GitHub
+2. Click en **Settings** → **Secrets and variables** → **Actions**
+3. Click en **New repository secret**
+4. Agrega los siguientes secrets:
+   - **Name:** `VITE_GA_MEASUREMENT_ID`
+     **Value:** Tu Measurement ID (ej: `X-XXXXXX`)
+   - **Name:** `VITE_GA_ENABLE_DEV` (opcional)
+     **Value:** `false`
+
+El workflow de GitHub Actions usará estos secrets automáticamente al hacer el build y reemplazará el ID en `index.html`.
+
+### **Características:**
+- 🎯 **Tracking automático** - Se inicializa al cargar la aplicación
+- 🔒 **Modo desarrollo** - Deshabilitado por defecto (configurable)
+- 📊 **Métricas detalladas** - Información contextual en cada evento
+- 🛡️ **Manejo de errores** - No afecta la funcionalidad si GA falla
+- 🎨 **Arquitectura escalable** - Fácil agregar nuevos eventos
 
 ## 🏗️ Scripts Disponibles
 
